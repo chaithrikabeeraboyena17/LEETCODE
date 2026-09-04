@@ -26,6 +26,9 @@ class Solution {
     for(int i=nums.length-1;i>=0;i--){  
         suffix=Math.min(suffix,nums[i]);
         prefix[i]=prefix[i]-suffix;
+        // if(prefix[i]<=k){
+        //     return i;
+        // }
     }   
     
      for(int i=0;i<nums.length;i++){
