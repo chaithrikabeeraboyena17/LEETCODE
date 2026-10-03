@@ -1,17 +1,42 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
-        int n=nums.length;
-      HashMap<Integer,Integer> hs=new HashMap<>();
-      for(int num:nums){
-        hs.put(num,hs.getOrDefault(num,0)+1);
-      }
-    //   int majority=nums.length/3;
-      List<Integer> l=new ArrayList<>();
-      for(int num:nums){
-        if(hs.get(num)>(n/3) && !l.contains(num)){
-            l.add(num);
+        List<Integer> l = new ArrayList<>();
+        int n = nums.length;
+        
+        int ele1 = 0, ele2 = 0;
+        int cnt1 = 0, cnt2 = 0;
+        
+        // Step 1: Find two potential candidates
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == ele1 && cnt1 > 0) {
+                cnt1++;
+            } else if (nums[i] == ele2 && cnt2 > 0) {
+                cnt2++;
+            } else if (cnt1 == 0) {
+                ele1 = nums[i];
+                cnt1 = 1;
+            } else if (cnt2 == 0) {
+                ele2 = nums[i];
+                cnt2 = 1;
+            } else {
+                cnt1--;
+                cnt2--;
+            }
         }
-      } 
-      return l;
+        
+        // Step 2: Verify both candidates
+        int count1 = 0, count2 = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == ele1) count1++;
+            else if (nums[i] == ele2) count2++;
+        }
+        
+        if (count1 > n / 3) l.add(ele1);
+        if (count2 > n / 3) l.add(ele2);
+        
+        return l;
     }
 }
